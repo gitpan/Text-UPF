@@ -18,7 +18,7 @@
  
 ## Class Global Values ############################ 
   our @ISA = qw(Exporter);
-  our $VERSION = '1.0.1';
+  our $VERSION = '1.0.3';
   our $errstr = ();
   our @EXPORT_OK = ($VERSION, $errstr);
 
@@ -137,6 +137,43 @@
  1;
 __END__
 ## AutoLoaded Methods
+
+
+## Wants ##########################################
+## return a unique list of datafields required in 
+## the given form letter
+sub Wants {
+	my ($self, %p) = @_;
+	
+	#try to open File, if it exists
+	unless (exists ($p{Text})){
+		if (exists ($p{Form})){
+			unless ($p{Text} = $self->GetFormDB(Form => $p{Form})){
+				$self->{errstr} = "failed to get form ($p{Form}) from database! $self->{errstr}";
+				return (undef);
+			}
+		}elsif (exists ($p{File})){
+			unless ($p{Text} = $self->GetFormFile(File => $p{File})){
+				$self->{errstr} = "failed to open form file ($p{File}) $self->{errstr}";
+				return (undef);
+			}
+		}else{
+			$self->{errstr} = "Text, Form, or File is a required option for Text::UPF::Populate";
+			return (undef);
+		}
+	}
+	
+	#go through and get all the pop tags
+	my %wants = ();
+	while ($p{Text} =~/($tagin)(.+?)($tagout)/i){
+		$wants{$1} ++;
+	}
+	
+	my @return = keys(%wants);
+	return (\@return);
+	
+}
+
 
 ## GetFormDB ######################################
 ##retrieve form letter from a database. This method
@@ -264,29 +301,32 @@ sub today {
 ##default mode is "html"
 sub ShowDiary {
      my ($self, %p) = @_;
+    #the directive contains a hash!
+     my %directive = ();
+     my $str = '%directive = ( ';
+     $str   .= $p{directive};
+     $str   .= ')';
+     eval ($str);
     #default mode
-     if (! exists($p{Mode})){ $p{Mode} = "html"; }
-    #Data must exist
-     unless (exists($p{Data}->{$p{directive}})){
-         $self->{errstr} = "$p{directive} does not exist in Data ... no diary to show";
+     if (! exists($directive{'Mode'})){ $directive{'Mode'} = "html"; }
+    #make sure we have the data we need
+     unless (exists($p{Data}->{$directive{'Data'}})){
+         $self->{errstr} = "$directive{'Data'} does not exist in Data ... no diary to show";
          $out = "no diary to show";
          return($out);
      }
     #prefixes and stuff
-     if ($p{Mode} eq "html"){
+     if ($directive{'Mode'} eq "html"){
          $out = "";
      }else {
          $out = "<pre>";
      }
     #do it
-     foreach (@{$self->{Data}->{$p{directive}}}){
+     foreach (@{$p{Data}->{$directive{'Data'}}}){
         #user / timestamp
-         if ($mode eq "html"){
+         if ($directive{'Mode'} eq "html"){
              $out .= "<b>$_->{timestamp} - User: <font color=red>$_->{user}</font></b><hr noshade><p>\n";
-             my @temp = split ("\n",$_->{value});
-             foreach $l (@temp){
-                 $out .= "\t$l<br>\n";
-             }
+             $out .= "<pre>$_->{'value'}</pre>\n";
              $out .= "<br><br></li>\n";
          }else{
              $out .= "[USER]: $_->{user}  /  [DATE]: $_->{timestamp}\n";
@@ -297,7 +337,7 @@ sub ShowDiary {
          }
      }
     #suffixes and stuff
-     if ($mode eq "html"){
+     if ($directive{'Mode'} eq "html"){
          $out .= "";
      }else {
          $out .= "</pre>";
@@ -305,6 +345,10 @@ sub ShowDiary {
     #back out there
      return ($out);
 }
+
+# end of Text::UPF::ShowDiary
+1;
+
 
 ## Disclaimer #####################
 sub Disclaimer {

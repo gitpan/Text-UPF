@@ -209,7 +209,45 @@ defined, Populate will chose to use Form.
 This is the path and name of a file to load a form from. This option is last in the pecking order
 so to speak. That is to saym that if Text and Form must be undefined for File to be used.
 
+=item	Data
+
+this is a hash reference, containing data items to insert in the Form specified by Form, File, or
+Text (see above). Each key in the hash should correspond to one of the pop tags in the document, 
+the associated value, of course, would be the data to replcace the pop tage with. (see above).
+
 =back
+
+
+=head1	Wants
+
+=head2	Synopsis
+
+my $field_list = $Object->Wants(Form => $form_name) || die $Object->{'errstr'};
+
+=head2	Notes
+
+this method returns an array reference containing the list of data fields required by pop tags
+in the given document. The document can be specified in any of the three ways available to the
+Populate method (Text, Form, or File).
+
+=head2	Options
+
+=over
+
+=item	Text
+
+specify a text string containing pop tags. (see Populate method for more info)
+
+=item	Form
+
+specify a form name to be retrieved from the database. (see Populate method for more info)
+
+=item	File
+
+specify a file to read a form letter from. (see Populate method for more info)
+
+=back
+
 
 =head1	Destroy
 
@@ -255,7 +293,7 @@ add the ability to define a date format (i.e. mm/dd/yy, etc).
 =head2	Synopsis
 
 <pop>ShowDiary{[options]}</pop>
-<pop>ShowDiary{Mode => "html", directive => "Diary"}</pop>
+<pop>ShowDiary{Mode => "html", Data => "Diary"}</pop>
 
 =head2	Notes
 

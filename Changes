@@ -1,0 +1,22 @@
+Revision history for Perl extension UPF.
+
+2.7.7	8/6/02	18:23:42
+	fixed bug in New, where it was ignoring inbound args
+2.7.8	8/7/02	15:45:54
+	fixed 'Use of uninitialized value ...' error when using named population methods.
+	fixed REPLY_TO error in Disclaimer method
+2.7.9	8/9/02	15:36:26
+	added disclaimer quote chars.
+	added suppport for non-standard database port connections.
+	put word wrap column length in Makefile.PL
+	fixed native line return issue in disclaimer
+2.8		8/19/02	15:52:28
+	fixed syntax error in GetFormDB call to DBTools::New
+	fixed error with placement of Port in object.
+	fixed linewrap error with Disclaimer method
+
+Namespace changed to Text::UPF for release to CPAN
+
+1.0		10/23/02 12:10:00
+	initial release for CPAN under namespace Text::UPF
+	first version of POD written for CPAN release.

@@ -18,7 +18,7 @@
  
 ## Class Global Values ############################ 
   our @ISA = qw(Exporter);
-  our $VERSION = '1.0.4';
+  our $VERSION = '1.0.5';
   our $errstr = ();
   our @EXPORT_OK = ($VERSION, $errstr);
 
@@ -163,10 +163,13 @@ sub Wants {
 		}
 	}
 	
+	#local for easier regex syntax
+	my ($tagin,$tagout) = ($self->{tagin},$self->{tagout});
+	
 	#go through and get all the pop tags
 	my %wants = ();
-	while ($p{Text} =~/($tagin)(.+?)($tagout)/i){
-		$wants{$1} ++;
+	while ($p{Text} =~s/($tagin)(.+?)($tagout)//i){
+		$wants{$2} ++;
 	}
 	
 	my @return = keys(%wants);

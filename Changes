@@ -1,5 +1,8 @@
 Revision history for Perl extension UPF.
 
+1.0.5	Wed Oct 22 16:58:12 EDT 2003
+		fixed bugs in the Wants() method. It actually works now ;-)
+
 1.0.4	Fri Oct 10 17:14:58 EDT 2003
 		updated syntax for Config::Framework instantiation
 		updated Makefile.PL to require Config::Framework >= 2.4

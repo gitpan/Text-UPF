@@ -20,3 +20,6 @@ Namespace changed to Text::UPF for release to CPAN
 1.0		10/23/02 12:10:00
 	initial release for CPAN under namespace Text::UPF
 	first version of POD written for CPAN release.
+1.0.1		10/25/02 9:44:08
+	fixed 'use' statement in test.pl so that it will at least
+	not fail CPAN testers. Still needs real test suite though.

@@ -94,10 +94,10 @@ if (get_info()){
         'ABSTRACT_FROM'	=> 'UPF.pod',
         'AUTHOR'		=> 'Andrew N. Hicox  <andrew@hicox.com>',
         'PREREQ_PM'		=> {
-            Date::Parse			=> 2.20,
-            Config::Framework	=> 1.01,
-            DBIx::YAWM			=> 2.0.8,
-            Text::Wrapper		=> 1.000
+            Date::Parse			=> '2.20',
+            Config::Framework	=> '2.4',
+            DBIx::YAWM			=> '2.0.8',
+            Text::Wrapper		=> '1.000'
         },
         'PM_FILTER'		=> "\$(PERL) ./insert_config_data"
     );
@@ -108,8 +108,8 @@ if (get_info()){
         'ABSTRACT_FROM'	=> 'UPF.pod',
         'AUTHOR'		=> 'Andrew N. Hicox  <andrew@hicox.com>',
         'PREREQ_PM'		=> {
-            Date::Parse		=> 2.20,
-            Text::Wrapper	=> 1.000
+            Date::Parse		=> '2.20',
+            Text::Wrapper	=> '1.000'
         },
         'PM_FILTER'		=> "\$(PERL) ./insert_config_data"
     );

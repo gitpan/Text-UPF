@@ -18,7 +18,7 @@
  
 ## Class Global Values ############################ 
   our @ISA = qw(Exporter);
-  our $VERSION = '1.0.3';
+  our $VERSION = '1.0.4';
   our $errstr = ();
   our @EXPORT_OK = ($VERSION, $errstr);
 
@@ -203,7 +203,7 @@ sub GetFormDB {
     require DBIx::YAWM;
    #get configuration data
     unless (exists($self->{Config})){
-        unless ($self->{Config} = Config::Framework::new(GetSecure	=> 1)){
+        unless ($self->{Config} = new Config::Framework(GetSecure	=> 1)){
             $self->{errstr} = "failed to get Config::Framework object";
             return (undef);
         }
